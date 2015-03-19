@@ -5,7 +5,9 @@
 #include"FoodData.h"
 
 class wxPanel;
+class wxTextCtrl;
 class wxListCtrl;
+class wxListEvent;
 
 class MainFrame : public wxFrame
 {
@@ -14,10 +16,14 @@ public:
 	~MainFrame();
 
 	void OnButtonNew( wxCommandEvent &evt );
+	void OnListSelection( wxListEvent &evt );
 
 private:
 	wxPanel* mainPanel;
 	wxListCtrl* listFood;
+	wxTextCtrl* ingredients;
+	wxTextCtrl* description;
+	wxTextCtrl* statistics;
 
 	FoodData foodData;
 };
