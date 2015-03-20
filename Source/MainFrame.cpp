@@ -36,15 +36,41 @@ MainFrame::MainFrame()
 
 	listFood = new ListController(mainPanel, wxPoint(5,55), wxSize(150,480-55));
 
+	//Connect(listFood->GetId(), wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(MainFrame::OnListSelection));
+
 	wxStaticBox *boxDescription = new wxStaticBox(mainPanel, wxID_ANY, wxString("Description"), wxPoint(160, 5), wxSize(480, 100));
 	wxStaticBox *boxRecipe = new wxStaticBox(mainPanel, wxID_ANY, wxString("Ingredients"), wxPoint(160, 110), wxSize(480, 150));
 	wxStaticBox *boxStats = new wxStaticBox(mainPanel, wxID_ANY, wxString("Statistics"), wxPoint(160, 270), wxSize(480, 205));
+
+	int textCtrlStyle = wxTE_BESTWRAP|wxTE_MULTILINE|wxTE_NO_VSCROLL;
+	wxPoint textCtrlPosition(5,15);
+
+	ingredients = new wxTextCtrl(boxRecipe, wxID_ANY, wxEmptyString, textCtrlPosition, wxSize(470,130), textCtrlStyle);
+	ingredients->Disable();
+
+	description = new wxTextCtrl(boxDescription, wxID_ANY, wxEmptyString, textCtrlPosition, wxSize(470,80), wxTE_BESTWRAP|wxTE_MULTILINE|wxTE_NO_VSCROLL);
+	description->Disable();
+
+	statistics = new wxTextCtrl(boxStats, wxID_ANY, wxEmptyString, textCtrlPosition, wxSize(150,250), wxTE_BESTWRAP|wxTE_MULTILINE|wxTE_NO_VSCROLL);
+	statistics->Disable();
 
 	Show();
 }
 
 MainFrame::~MainFrame()
 {
+}
+
+void MainFrame::OnListSelection( wxListEvent &evt )
+{
+	auto item = evt.GetItem();
+
+	auto itemName = item.GetText();
+
+	const Food *selectedFood = foodData.GetFoodByName( itemName );
+
+	description->SetValue( selectedFood->description );
+	ingredients->SetValue( selectedFood->ingredients );
 }
 
 void MainFrame::OnButtonNew( wxCommandEvent &evt )
@@ -55,9 +81,11 @@ void MainFrame::OnButtonNew( wxCommandEvent &evt )
 	{
 		Food newFood;
 
+		//DataSide
 		foodManipulator.GetFood(newFood);
 		foodData.CreateFood(newFood);
 
+		//UI Side
 		listFood->AddEntry(newFood.name);
 	}
 }

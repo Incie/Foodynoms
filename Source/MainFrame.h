@@ -6,6 +6,9 @@
 
 class wxPanel;
 class ListController;
+class wxTextCtrl;
+class wxListCtrl;
+class wxListEvent;
 
 class MainFrame : public wxFrame
 {
@@ -18,8 +21,14 @@ public:
 	void OnButtonRemove( wxCommandEvent &evt );
 
 private:
+	void OnListSelection( wxListEvent &evt );
+
 	wxPanel* mainPanel;
-	
+
 	ListController *listFood;
+	wxTextCtrl* ingredients;
+	wxTextCtrl* description;
+	wxTextCtrl* statistics;
+
 	FoodData foodData;
 };
