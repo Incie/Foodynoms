@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="Source\FoodData.cpp" />
     <ClCompile Include="Source\FoodManipulator.cpp" />
+    <ClCompile Include="Source\ListController.cpp" />
     <ClCompile Include="Source\MainFrame.cpp" />
     <ClCompile Include="Source\tinyxml\tinyxml2.cpp" />
     <ClCompile Include="Source\wxApp.cpp" />
@@ -22,6 +23,7 @@
     <ClInclude Include="Source\Food.h" />
     <ClInclude Include="Source\FoodData.h" />
     <ClInclude Include="Source\FoodManipulator.h" />
+    <ClInclude Include="Source\ListController.h" />
     <ClInclude Include="Source\MainFrame.h" />
     <ClInclude Include="Source\tinyxml\tinyxml2.h" />
     <ClInclude Include="Source\XMLFoodHandler.h" />

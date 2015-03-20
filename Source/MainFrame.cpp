@@ -1,6 +1,7 @@
 #include"MainFrame.h"
 #include"FoodManipulator.h"
 #include"Food.h"
+#include"ListController.h"
 #include<wx/panel.h>
 #include<wx/listctrl.h>
 #include<wx/stattext.h>
@@ -28,11 +29,12 @@ MainFrame::MainFrame()
 	buttonDel->SetBitmap(wxBitmap("Images/Remove.png", wxBITMAP_TYPE_PNG));
 
 	Connect(buttonNew->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::OnButtonNew));
+	Connect(buttonMod->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::OnButtonModify));
+	Connect(buttonDel->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::OnButtonRemove));
 
 	wxTextCtrl *search = new wxTextCtrl(mainPanel, wxID_ANY, "Filter...", wxPoint(5,32), wxSize(150, 20));
 
-	listFood = new wxListCtrl(mainPanel, wxID_ANY, wxPoint(5,55), wxSize(150, 480-55), wxLC_REPORT|wxLC_SINGLE_SEL );
-	listFood->InsertColumn(0, "Fud");
+	listFood = new ListController(mainPanel, wxPoint(5,55), wxSize(150,480-55));
 
 	wxStaticBox *boxDescription = new wxStaticBox(mainPanel, wxID_ANY, wxString("Description"), wxPoint(160, 5), wxSize(480, 100));
 	wxStaticBox *boxRecipe = new wxStaticBox(mainPanel, wxID_ANY, wxString("Ingredients"), wxPoint(160, 110), wxSize(480, 150));
@@ -56,7 +58,38 @@ void MainFrame::OnButtonNew( wxCommandEvent &evt )
 		foodManipulator.GetFood(newFood);
 		foodData.CreateFood(newFood);
 
-		long itemIndex = listFood->InsertItem(0, newFood.name);
-		listFood->SetItemState(itemIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+		listFood->AddEntry(newFood.name);
 	}
+}
+
+void MainFrame::OnButtonModify( wxCommandEvent &evt )
+{
+	wxString foodName;
+	listFood->GetSelected(foodName);
+
+	const Food *foodCurrent = foodData.GetFoodByName(foodName);
+
+	FoodManipulator foodManipulator(this);
+	foodManipulator.SetFood(*foodCurrent);
+
+	if( foodManipulator.ShowModal() == wxID_OK )
+	{
+		//replace food in data
+		//replace food in UI
+		//deselect 
+		//and reselect new data
+
+		//investigate if selecting an already selected index triggers event
+	}
+}
+
+void MainFrame::OnButtonRemove( wxCommandEvent &evt )
+{
+	//Message Dialog
+
+	wxString foodName;
+	listFood->GetSelected(foodName);
+	listFood->RemoveEntry(foodName);
+
+	//Remove Data
 }

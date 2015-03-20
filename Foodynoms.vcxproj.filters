@@ -37,6 +37,9 @@
     <ClCompile Include="Source\FoodData.cpp">
       <Filter>Source Files\Data</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ListController.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\XMLFoodHandler.h">
@@ -56,6 +59,9 @@
     </ClInclude>
     <ClInclude Include="Source\FoodData.h">
       <Filter>Source Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ListController.h">
+      <Filter>Source Files\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

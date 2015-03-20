@@ -5,7 +5,7 @@
 #include"FoodData.h"
 
 class wxPanel;
-class wxListCtrl;
+class ListController;
 
 class MainFrame : public wxFrame
 {
@@ -14,10 +14,12 @@ public:
 	~MainFrame();
 
 	void OnButtonNew( wxCommandEvent &evt );
+	void OnButtonModify( wxCommandEvent &evt );
+	void OnButtonRemove( wxCommandEvent &evt );
 
 private:
 	wxPanel* mainPanel;
-	wxListCtrl* listFood;
-
+	
+	ListController *listFood;
 	FoodData foodData;
 };
