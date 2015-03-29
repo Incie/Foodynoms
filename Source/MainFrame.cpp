@@ -36,35 +36,47 @@ MainFrame::MainFrame()
 
 	listFood = new ListController(mainPanel, wxPoint(5,55), wxSize(150,480-55));
 
-	//Connect(listFood->GetId(), wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(MainFrame::OnListSelection));
-
-	wxStaticBox *boxDescription = new wxStaticBox(mainPanel, wxID_ANY, wxString("Description"), wxPoint(160, 5), wxSize(480, 100));
-	wxStaticBox *boxRecipe = new wxStaticBox(mainPanel, wxID_ANY, wxString("Ingredients"), wxPoint(160, 110), wxSize(480, 150));
-	wxStaticBox *boxStats = new wxStaticBox(mainPanel, wxID_ANY, wxString("Statistics"), wxPoint(160, 270), wxSize(480, 205));
-
+	Connect(listFood->GetListID(), wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(MainFrame::OnListSelection));
+	
 	int textCtrlStyle = wxTE_BESTWRAP|wxTE_MULTILINE|wxTE_NO_VSCROLL;
 	wxPoint textCtrlPosition(5,15);
 
-	ingredients = new wxTextCtrl(boxRecipe, wxID_ANY, wxEmptyString, textCtrlPosition, wxSize(470,130), textCtrlStyle);
-	ingredients->Disable();
-
+	wxStaticBox *boxDescription = new wxStaticBox(mainPanel, wxID_ANY, wxString("Description"), wxPoint(160, 5), wxSize(480, 100));
 	description = new wxTextCtrl(boxDescription, wxID_ANY, wxEmptyString, textCtrlPosition, wxSize(470,80), wxTE_BESTWRAP|wxTE_MULTILINE|wxTE_NO_VSCROLL);
 	description->Disable();
 
+	wxStaticBox *boxRecipe = new wxStaticBox(mainPanel, wxID_ANY, wxString("Ingredients"), wxPoint(160, 110), wxSize(480, 150));
+	ingredients = new wxTextCtrl(boxRecipe, wxID_ANY, wxEmptyString, textCtrlPosition, wxSize(470,130), textCtrlStyle);
+	ingredients->Disable();
+
+	wxStaticBox *boxStats = new wxStaticBox(mainPanel, wxID_ANY, wxString("Statistics"), wxPoint(160, 270), wxSize(480, 205));
 	statistics = new wxTextCtrl(boxStats, wxID_ANY, wxEmptyString, textCtrlPosition, wxSize(150,250), wxTE_BESTWRAP|wxTE_MULTILINE|wxTE_NO_VSCROLL);
 	statistics->Disable();
 
+	Connect(wxEVT_CLOSE_WINDOW, wxCloseEventHandler(MainFrame::OnClose));
+
 	Show();
+
+
+	foodData.LoadDataFromFile("FoodData.xml");
+	auto nameList = foodData.GetFoodNameList();
+	for( auto name : nameList )
+		listFood->AddEntry(name);
 }
 
 MainFrame::~MainFrame()
 {
 }
 
+void MainFrame::OnClose( wxCloseEvent &evt )
+{
+	foodData.SaveDataToFile("FoodData.xml");
+	evt.Skip();
+}
+
 void MainFrame::OnListSelection( wxListEvent &evt )
 {
 	auto item = evt.GetItem();
-
 	auto itemName = item.GetText();
 
 	const Food *selectedFood = foodData.GetFoodByName( itemName );
@@ -120,4 +132,5 @@ void MainFrame::OnButtonRemove( wxCommandEvent &evt )
 	listFood->RemoveEntry(foodName);
 
 	//Remove Data
+	//Clear UI
 }

@@ -25,6 +25,8 @@ public:
 
 	ErrorCode AddEntry(const wxString &entryName );
 	ErrorCode RemoveEntry( const wxString &entryName );
+
+	int GetListID();
 private:
 	int GetSelectedIndex();
 	int GetListIndexByName(const wxString &name);

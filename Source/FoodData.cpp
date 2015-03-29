@@ -1,5 +1,6 @@
 #include"FoodData.h"
 #include"Food.h"
+#include"XMLFoodHandler.h"
 
 FoodData::FoodData()
 {
@@ -8,8 +9,43 @@ FoodData::FoodData()
 
 FoodData::~FoodData()
 {
-	for( auto food : data )
+	ClearData();
+}
+
+void FoodData::ClearData()
+{
+	for( Food* food : data )
 		delete food;
+
+	data.clear();
+}
+
+std::vector<wxString> FoodData::GetFoodNameList()
+{
+	std::vector<wxString> foodNames;
+
+	for( auto food : data )
+		foodNames.push_back(food->name);
+
+	return foodNames;
+}
+
+bool FoodData::LoadDataFromFile(const wxString &file)
+{
+	ClearData();
+
+	XMLFoodHandler xmlFood;
+	xmlFood.LoadDocument(file, data);
+
+	return true;
+}
+
+bool FoodData::SaveDataToFile( const wxString &file)
+{
+	XMLFoodHandler xmlFood;
+	xmlFood.SaveDocument(file, data);
+
+	return true;
 }
 
 bool FoodData::CreateFood(const Food& food)

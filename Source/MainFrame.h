@@ -19,6 +19,7 @@ public:
 	void OnButtonNew( wxCommandEvent &evt );
 	void OnButtonModify( wxCommandEvent &evt );
 	void OnButtonRemove( wxCommandEvent &evt );
+	void OnClose( wxCloseEvent &evt );
 
 private:
 	void OnListSelection( wxListEvent &evt );

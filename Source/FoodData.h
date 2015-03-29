@@ -12,10 +12,17 @@ public:
 	FoodData();
 	~FoodData();
 
+	void ClearData();
+
+	bool LoadDataFromFile(const wxString &file);
+	bool SaveDataToFile( const wxString &file);
+
 	bool CreateFood(const Food& food);
 	bool DeleteFoodByName( const wxString &name );
 
 	const Food* GetFoodByName( const wxString &name );
+	std::vector<wxString> GetFoodNameList();
+
 private:
 	std::vector<Food*> data;
 };

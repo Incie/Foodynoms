@@ -18,8 +18,8 @@ public:
 
 	int OnExit()
 	{
-		if(mainFrame)
-			delete mainFrame;
+		//if(mainFrame)
+			//delete mainFrame;
 
 		return 1;
 	}

@@ -14,6 +14,13 @@ ListController::~ListController()
 {
 }
 
+int ListController::GetListID() 
+{
+	if( !list ) 
+		return -1; 
+	return list->GetId(); 
+}
+
 ListController::ErrorCode ListController::SetSelected(const wxString &entryName)
 {
 	int index = GetListIndexByName(entryName);
