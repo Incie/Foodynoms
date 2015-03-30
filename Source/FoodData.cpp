@@ -56,18 +56,40 @@ bool FoodData::CreateFood(const Food& food)
 	return true;
 }
 
-bool FoodData::DeleteFoodByName( const wxString &name )
+bool FoodData::UpdateFood(const Food& oldFood, Food& newFood)
 {
+	Food *fud = 0;
 	for( auto food : data )
 	{
+		if( food->name.Cmp(oldFood.name) == 0 )
+		{
+			fud = food;
+			break;
+		}
+	}
+
+	if( !fud )
+		return false;
+
+	fud->UpdateChanged(newFood);
+
+	return true;
+}
+
+bool FoodData::DeleteFoodByName( const wxString &name )
+{
+	for( auto it = data.begin(); it != data.end(); ++it )
+	{
+		Food* food = (*it);
 		if( food->name.Cmp(name) == 0 )
 		{
-			//data.erase(food);
+			data.erase(it);
+			return true;
 		}
 
 	}
 
-	return true;
+	return false;
 }
 
 const Food* FoodData::GetFoodByName( const wxString &name )

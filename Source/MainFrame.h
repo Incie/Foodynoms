@@ -2,6 +2,7 @@
 
 
 #include<wx/frame.h>
+#include"Food.h"
 #include"FoodData.h"
 
 class wxPanel;
@@ -24,6 +25,8 @@ public:
 private:
 	void OnListSelection( wxListEvent &evt );
 
+	void UpdateFoodUI( const Food &food );
+
 	wxPanel* mainPanel;
 
 	ListController *listFood;
@@ -32,4 +35,5 @@ private:
 	wxTextCtrl* statistics;
 
 	FoodData foodData;
+	const Food emptyFood;
 };

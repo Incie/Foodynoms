@@ -78,10 +78,10 @@ void FoodManipulator::ClearFields()
 
 void FoodManipulator::OnButtonOK(wxCommandEvent &evt)
 {
-	EndModal(ID_OK);
+	EndModal(wxID_OK);
 }
 
 void FoodManipulator::OnButtonCancel(wxCommandEvent &evt)
 {
-	EndModal(ID_CANCEL);
+	EndModal(wxID_CANCEL);
 }

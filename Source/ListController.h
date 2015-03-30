@@ -20,6 +20,8 @@ public:
 		ENTRY_NOT_FOUND
 	};
 
+	ErrorCode UpdateEntry(const wxString &currentName, const wxString &newName );
+
 	ErrorCode SetSelected(const wxString &entryName);
 	ErrorCode GetSelected(wxString &selection);
 

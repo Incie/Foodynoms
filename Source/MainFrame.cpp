@@ -9,6 +9,7 @@
 #include<wx/image.h>
 #include<wx/button.h>
 #include<wx/textctrl.h>
+#include<wx/msgdlg.h>
 
 MainFrame::MainFrame()
 	: wxFrame(nullptr, wxID_ANY, wxT("Foodynoms 0.1.1"))
@@ -68,6 +69,13 @@ MainFrame::~MainFrame()
 {
 }
 
+void MainFrame::UpdateFoodUI( const Food &food )
+{
+
+	description->SetValue( food.description );
+	ingredients->SetValue( food.ingredients );
+}
+
 void MainFrame::OnClose( wxCloseEvent &evt )
 {
 	foodData.SaveDataToFile("FoodData.xml");
@@ -81,8 +89,13 @@ void MainFrame::OnListSelection( wxListEvent &evt )
 
 	const Food *selectedFood = foodData.GetFoodByName( itemName );
 
-	description->SetValue( selectedFood->description );
-	ingredients->SetValue( selectedFood->ingredients );
+	if( !selectedFood )
+	{
+		wxMessageBox("Could not find: " + itemName + "in FoodData");
+		return;
+	}
+
+	UpdateFoodUI(*selectedFood);
 }
 
 void MainFrame::OnButtonNew( wxCommandEvent &evt )
@@ -107,30 +120,43 @@ void MainFrame::OnButtonModify( wxCommandEvent &evt )
 	wxString foodName;
 	listFood->GetSelected(foodName);
 
-	const Food *foodCurrent = foodData.GetFoodByName(foodName);
+	const Food *foodCurrentPtr = foodData.GetFoodByName(foodName);
+
+	if( !foodCurrentPtr )
+	{
+		wxMessageBox("Could not find " + foodName );
+		return;
+	}
+
+	const Food foodCurrent = *foodCurrentPtr;
 
 	FoodManipulator foodManipulator(this);
-	foodManipulator.SetFood(*foodCurrent);
+	foodManipulator.SetFood(foodCurrent);
 
 	if( foodManipulator.ShowModal() == wxID_OK )
 	{
-		//replace food in data
-		//replace food in UI
-		//deselect 
-		//and reselect new data
+		Food foodNew;
+		foodManipulator.GetFood(foodNew);
+		foodData.UpdateFood(foodCurrent, foodNew);
 
-		//investigate if selecting an already selected index triggers event
+		//replace food in UI
+		if( foodNew.name.Cmp(foodCurrent.name) != 0 )
+			listFood->UpdateEntry(foodCurrent.name, foodNew.name);
+
+		UpdateFoodUI(foodNew);
 	}
 }
 
 void MainFrame::OnButtonRemove( wxCommandEvent &evt )
 {
-	//Message Dialog
+	//Message Dialog -> Are you sure?
 
 	wxString foodName;
 	listFood->GetSelected(foodName);
 	listFood->RemoveEntry(foodName);
 
+	UpdateFoodUI( emptyFood );
+
 	//Remove Data
-	//Clear UI
+	foodData.DeleteFoodByName(foodName);
 }

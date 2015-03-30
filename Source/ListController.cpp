@@ -48,6 +48,23 @@ ListController::ErrorCode ListController::AddEntry(const wxString& entryName )
 	return ListController::EC_SUCCESS;
 }
 
+ListController::ErrorCode ListController::UpdateEntry(const wxString &currentName, const wxString &newName )
+{
+	int index = GetListIndexByName(currentName);
+
+	if( index == -1 )
+		return ListController::ENTRY_NOT_FOUND;
+
+	wxListItem listItem;
+	listItem.m_itemId = index;
+	listItem.m_col = 0;
+	listItem.m_mask = wxLIST_MASK_TEXT;
+	listItem.m_text = newName;
+	list->SetItem(listItem);
+
+	return ListController::EC_SUCCESS;
+}
+
 ListController::ErrorCode ListController::RemoveEntry( const wxString &entryName )
 {
 	int index = GetListIndexByName(entryName);

@@ -18,6 +18,7 @@ public:
 	bool SaveDataToFile( const wxString &file);
 
 	bool CreateFood(const Food& food);
+	bool UpdateFood(const Food& oldFood, Food& newFood);
 	bool DeleteFoodByName( const wxString &name );
 
 	const Food* GetFoodByName( const wxString &name );
