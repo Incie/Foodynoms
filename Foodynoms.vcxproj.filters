@@ -14,9 +14,6 @@
     <Filter Include="Source Files\Data">
       <UniqueIdentifier>{1aad77d2-1c17-4fa8-93e1-447605fa120c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\tinyxml">
-      <UniqueIdentifier>{2f23bf5c-c9f9-4d6a-a773-cae5b5d50f80}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\XMLFoodHandler.cpp">
@@ -30,9 +27,6 @@
     </ClCompile>
     <ClCompile Include="Source\FoodManipulator.cpp">
       <Filter>Source Files\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\tinyxml\tinyxml2.cpp">
-      <Filter>Source Files\tinyxml</Filter>
     </ClCompile>
     <ClCompile Include="Source\FoodData.cpp">
       <Filter>Source Files\Data</Filter>
@@ -53,9 +47,6 @@
     </ClInclude>
     <ClInclude Include="Source\FoodManipulator.h">
       <Filter>Source Files\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\tinyxml\tinyxml2.h">
-      <Filter>Source Files\tinyxml</Filter>
     </ClInclude>
     <ClInclude Include="Source\FoodData.h">
       <Filter>Source Files\Data</Filter>

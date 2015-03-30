@@ -11,7 +11,7 @@
 #include<wx/textctrl.h>
 
 MainFrame::MainFrame()
-	: wxFrame(nullptr, wxID_ANY, wxT("Foodynoms alpha 1"))
+	: wxFrame(nullptr, wxID_ANY, wxT("Foodynoms 0.1.1"))
 {
 	wxInitAllImageHandlers();
 	Center();
@@ -42,7 +42,7 @@ MainFrame::MainFrame()
 	wxPoint textCtrlPosition(5,15);
 
 	wxStaticBox *boxDescription = new wxStaticBox(mainPanel, wxID_ANY, wxString("Description"), wxPoint(160, 5), wxSize(480, 100));
-	description = new wxTextCtrl(boxDescription, wxID_ANY, wxEmptyString, textCtrlPosition, wxSize(470,80), wxTE_BESTWRAP|wxTE_MULTILINE|wxTE_NO_VSCROLL);
+	description = new wxTextCtrl(boxDescription, wxID_ANY, wxEmptyString, textCtrlPosition, wxSize(470,80), textCtrlStyle);
 	description->Disable();
 
 	wxStaticBox *boxRecipe = new wxStaticBox(mainPanel, wxID_ANY, wxString("Ingredients"), wxPoint(160, 110), wxSize(480, 150));
@@ -50,7 +50,7 @@ MainFrame::MainFrame()
 	ingredients->Disable();
 
 	wxStaticBox *boxStats = new wxStaticBox(mainPanel, wxID_ANY, wxString("Statistics"), wxPoint(160, 270), wxSize(480, 205));
-	statistics = new wxTextCtrl(boxStats, wxID_ANY, wxEmptyString, textCtrlPosition, wxSize(150,250), wxTE_BESTWRAP|wxTE_MULTILINE|wxTE_NO_VSCROLL);
+	statistics = new wxTextCtrl(boxStats, wxID_ANY, wxEmptyString, textCtrlPosition, wxSize(150,250), textCtrlStyle);
 	statistics->Disable();
 
 	Connect(wxEVT_CLOSE_WINDOW, wxCloseEventHandler(MainFrame::OnClose));
