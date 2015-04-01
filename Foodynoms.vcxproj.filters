@@ -5,19 +5,22 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Source Files\IO">
-      <UniqueIdentifier>{6acf9362-1558-4249-a892-605685c0eda7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\UI">
       <UniqueIdentifier>{ff41765f-aeb0-4b7e-953f-b9dac33a64cb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Data">
       <UniqueIdentifier>{1aad77d2-1c17-4fa8-93e1-447605fa120c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Utils">
+      <UniqueIdentifier>{ae3e4d99-1d99-405c-ad55-34e9754f0e0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils\IO">
+      <UniqueIdentifier>{6acf9362-1558-4249-a892-605685c0eda7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\XMLFoodHandler.cpp">
-      <Filter>Source Files\IO</Filter>
+      <Filter>Source Files\Utils\IO</Filter>
     </ClCompile>
     <ClCompile Include="Source\MainFrame.cpp">
       <Filter>Source Files\UI</Filter>
@@ -34,10 +37,16 @@
     <ClCompile Include="Source\ListController.cpp">
       <Filter>Source Files\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Date.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DatePickerDialog.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\XMLFoodHandler.h">
-      <Filter>Source Files\IO</Filter>
+      <Filter>Source Files\Utils\IO</Filter>
     </ClInclude>
     <ClInclude Include="Source\MainFrame.h">
       <Filter>Source Files\UI</Filter>
@@ -52,6 +61,12 @@
       <Filter>Source Files\Data</Filter>
     </ClInclude>
     <ClInclude Include="Source\ListController.h">
+      <Filter>Source Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Date.h">
+      <Filter>Source Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DatePickerDialog.h">
       <Filter>Source Files\UI</Filter>
     </ClInclude>
   </ItemGroup>

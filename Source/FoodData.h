@@ -21,9 +21,11 @@ public:
 	bool UpdateFood(const Food& oldFood, Food& newFood);
 	bool DeleteFoodByName( const wxString &name );
 
+	bool AddDateToFood( const wxString &name, const wxString &date );
 	const Food* GetFoodByName( const wxString &name );
 	std::vector<wxString> GetFoodNameList();
 
 private:
+	Food* GetFood( const wxString &name );
 	std::vector<Food*> data;
 };

@@ -12,6 +12,17 @@ FoodData::~FoodData()
 	ClearData();
 }
 
+bool FoodData::AddDateToFood( const wxString &name, const wxString &date )
+{
+	Food* food = GetFood(name);
+
+	if( !food )
+		return false;
+
+	food->datesEaten += (date + ";");
+	return true;
+}
+
 void FoodData::ClearData()
 {
 	for( Food* food : data )
@@ -86,13 +97,13 @@ bool FoodData::DeleteFoodByName( const wxString &name )
 			data.erase(it);
 			return true;
 		}
-
 	}
 
 	return false;
 }
 
-const Food* FoodData::GetFoodByName( const wxString &name )
+
+Food* FoodData::GetFood( const wxString &name )
 {
 	for( auto food : data )
 	{
@@ -101,4 +112,10 @@ const Food* FoodData::GetFoodByName( const wxString &name )
 	}
 
 	return nullptr;
+}
+
+
+const Food* FoodData::GetFoodByName( const wxString &name )
+{
+	return GetFood(name);
 }

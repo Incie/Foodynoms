@@ -20,6 +20,8 @@ public:
 		ENTRY_NOT_FOUND
 	};
 
+	void ParseList(const wxString &list);
+
 	ErrorCode UpdateEntry(const wxString &currentName, const wxString &newName );
 
 	ErrorCode SetSelected(const wxString &entryName);
@@ -28,6 +30,7 @@ public:
 	ErrorCode AddEntry(const wxString &entryName );
 	ErrorCode RemoveEntry( const wxString &entryName );
 
+	void SetColumnName(const wxString &columnName);
 	int GetListID();
 private:
 	int GetSelectedIndex();

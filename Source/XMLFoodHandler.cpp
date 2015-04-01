@@ -48,11 +48,13 @@ int XMLFoodHandler::LoadDocument( const wxString &file, std::vector<Food*> &food
 				if( child )
 					food->ingredients = child->GetContent();
 			}
+			else if( nodeName.Cmp("dates_eaten") == 0 )
+			{
+				wxXmlNode *child = dataNode->GetChildren();
 
-			//else if( nodeName.Cmp("times_eaten") == 0 )
-			//	food->timesEaten = dataNode->GetChildren()->GetContent();
-			//else if( nodeName.Cmp("dates_eaten") == 0 )
-			//	food->datesEaten = dataNode->GetChildren()->GetContent();
+				if( child )
+					food->datesEaten = child->GetContent();
+			}
 
 			dataNode = dataNode->GetNext();
 		}
@@ -84,11 +86,9 @@ int XMLFoodHandler::SaveDocument( const wxString &file, const std::vector<Food*>
 		wxXmlNode *recipeTextNode = new wxXmlNode(recipeNode, wxXML_TEXT_NODE, food->ingredients);
 		recipeTextNode->SetContent( food->ingredients );
 		
-		/*wxXmlNode *timesEatenNode = new wxXmlNode(foodNode, wxXML_ELEMENT_NODE, "times_eaten");
-		timesEatenNode->SetContent(food->timesEaten);
-
 		wxXmlNode *datesEatenNode = new wxXmlNode(foodNode, wxXML_ELEMENT_NODE, "dates_eaten");
-		datesEatenNode->SetContent(food->datesEaten);*/
+		wxXmlNode *datesEatenTextNode = new wxXmlNode(datesEatenNode, wxXML_TEXT_NODE, food->datesEaten);
+		datesEatenTextNode->SetContent(food->datesEaten);
 	}
 
 	if( !document.Save(file) )

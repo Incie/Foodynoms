@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Date.cpp" />
+    <ClCompile Include="Source\DatePickerDialog.cpp" />
     <ClCompile Include="Source\FoodData.cpp" />
     <ClCompile Include="Source\FoodManipulator.cpp" />
     <ClCompile Include="Source\ListController.cpp" />
@@ -19,6 +21,8 @@
     <ClCompile Include="Source\XMLFoodHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Date.h" />
+    <ClInclude Include="Source\DatePickerDialog.h" />
     <ClInclude Include="Source\Food.h" />
     <ClInclude Include="Source\FoodData.h" />
     <ClInclude Include="Source\FoodManipulator.h" />

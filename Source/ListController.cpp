@@ -1,4 +1,5 @@
 #include"ListController.h"
+#include<wx/tokenzr.h>
 #include<wx/listctrl.h>
 
 ListController::ListController( wxWindow* parent, const wxPoint &position, const wxSize &size )
@@ -6,12 +7,33 @@ ListController::ListController( wxWindow* parent, const wxPoint &position, const
 	list = new wxListCtrl(parent, wxID_ANY, position, size, wxLC_REPORT|wxLC_SINGLE_SEL);
 
 	wxSize listClientSize = list->GetClientSize();	
-	int columnIndex = list->InsertColumn(0, "Fud");
+	int columnIndex = list->InsertColumn(0, "Unitialized");
 	list->SetColumnWidth(columnIndex, listClientSize.x);	
 }
 
 ListController::~ListController()
 {
+}
+
+void ListController::ParseList(const wxString &listString)
+{
+	list->DeleteAllItems();
+
+	wxStringTokenizer tokens;
+	tokens.SetString(listString, ";");
+
+	while( tokens.HasMoreTokens() )
+	{
+		AddEntry( tokens.GetNextToken() );
+	}
+}
+
+void ListController::SetColumnName(const wxString &columnName)
+{
+	wxListItem column;
+	column.m_mask = wxLIST_MASK_TEXT;
+	column.m_text = columnName;
+	list->SetColumn(0, column);
 }
 
 int ListController::GetListID() 
@@ -44,7 +66,7 @@ ListController::ErrorCode ListController::GetSelected(wxString &selection)
 
 ListController::ErrorCode ListController::AddEntry(const wxString& entryName )
 {
-	list->InsertItem(0, entryName);
+	list->InsertItem( list->GetItemCount(), entryName);
 	return ListController::EC_SUCCESS;
 }
 

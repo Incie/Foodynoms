@@ -2,6 +2,8 @@
 #include"FoodManipulator.h"
 #include"Food.h"
 #include"ListController.h"
+#include"Date.h"
+
 #include<wx/panel.h>
 #include<wx/listctrl.h>
 #include<wx/stattext.h>
@@ -28,31 +30,47 @@ MainFrame::MainFrame()
 	buttonMod->SetBitmap(wxBitmap("Images/Modify.png", wxBITMAP_TYPE_PNG));
 	wxButton* buttonDel = new wxButton(mainPanel, wxID_ANY, wxEmptyString, wxPoint(59,5), wxSize(24,24));
 	buttonDel->SetBitmap(wxBitmap("Images/Remove.png", wxBITMAP_TYPE_PNG));
+	wxButton* buttonNom = new wxButton(mainPanel, wxID_ANY, wxEmptyString, wxPoint(89,5), wxSize(24,24));
+	buttonNom->SetBitmap(wxBitmap("Images/Nom.png", wxBITMAP_TYPE_PNG));
+	wxButton* buttonNomWhen = new wxButton(mainPanel, wxID_ANY, wxEmptyString, wxPoint(89+27,5), wxSize(24,24));
+	buttonNomWhen->SetBitmap(wxBitmap("Images/NomWhen.png", wxBITMAP_TYPE_PNG));
 
 	Connect(buttonNew->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::OnButtonNew));
 	Connect(buttonMod->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::OnButtonModify));
 	Connect(buttonDel->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::OnButtonRemove));
+	Connect(buttonNom->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::OnButtonNom));
+	Connect(buttonNomWhen->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::OnButtonNomWhen));
 
 	wxTextCtrl *search = new wxTextCtrl(mainPanel, wxID_ANY, "Filter...", wxPoint(5,32), wxSize(150, 20));
 
 	listFood = new ListController(mainPanel, wxPoint(5,55), wxSize(150,480-55));
+	listFood->SetColumnName("Fud");
 
 	Connect(listFood->GetListID(), wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(MainFrame::OnListSelection));
 	
+	statFoodHeader = new wxStaticText(mainPanel, wxID_ANY, "<No Selection>", wxPoint(160, 5));
+	wxFont font = statFoodHeader->GetFont();
+	font.SetPointSize(12);
+	statFoodHeader->SetFont(font);
+
+
 	int textCtrlStyle = wxTE_BESTWRAP|wxTE_MULTILINE|wxTE_NO_VSCROLL;
 	wxPoint textCtrlPosition(5,15);
 
-	wxStaticBox *boxDescription = new wxStaticBox(mainPanel, wxID_ANY, wxString("Description"), wxPoint(160, 5), wxSize(480, 100));
+	wxStaticBox *boxDescription = new wxStaticBox(mainPanel, wxID_ANY, wxString("Description"), wxPoint(160, 25), wxSize(480, 100));
 	description = new wxTextCtrl(boxDescription, wxID_ANY, wxEmptyString, textCtrlPosition, wxSize(470,80), textCtrlStyle);
 	description->Disable();
 
-	wxStaticBox *boxRecipe = new wxStaticBox(mainPanel, wxID_ANY, wxString("Ingredients"), wxPoint(160, 110), wxSize(480, 150));
+	wxStaticBox *boxRecipe = new wxStaticBox(mainPanel, wxID_ANY, wxString("Ingredients"), wxPoint(160, 130), wxSize(480, 150));
 	ingredients = new wxTextCtrl(boxRecipe, wxID_ANY, wxEmptyString, textCtrlPosition, wxSize(470,130), textCtrlStyle);
 	ingredients->Disable();
 
-	wxStaticBox *boxStats = new wxStaticBox(mainPanel, wxID_ANY, wxString("Statistics"), wxPoint(160, 270), wxSize(480, 205));
-	statistics = new wxTextCtrl(boxStats, wxID_ANY, wxEmptyString, textCtrlPosition, wxSize(150,250), textCtrlStyle);
+	wxStaticBox *boxStats = new wxStaticBox(mainPanel, wxID_ANY, wxString("Statistics"), wxPoint(160, 290), wxSize(480, 205));
+	statistics = new wxTextCtrl(boxStats, wxID_ANY, wxEmptyString, textCtrlPosition, wxSize(150,185), textCtrlStyle);
 	statistics->Disable();
+
+	listDates = new ListController(boxStats, wxPoint(160, 15), wxSize(150, 185) );
+	listDates->SetColumnName("Dates");
 
 	Connect(wxEVT_CLOSE_WINDOW, wxCloseEventHandler(MainFrame::OnClose));
 
@@ -69,11 +87,46 @@ MainFrame::~MainFrame()
 {
 }
 
+void MainFrame::UpdateFoodUI( const wxString &foodName )
+{
+	const Food *food = foodData.GetFoodByName(foodName);
+
+	if( food )
+		UpdateFoodUI(*food);
+}
+
 void MainFrame::UpdateFoodUI( const Food &food )
 {
+	statFoodHeader->SetLabel(food.name);
+	listDates->ParseList( food.datesEaten );
 
 	description->SetValue( food.description );
 	ingredients->SetValue( food.ingredients );
+}
+
+
+void MainFrame::OnButtonNom( wxCommandEvent &evt )
+{
+	wxString selectedName;
+	listFood->GetSelected(selectedName);
+	
+	wxString date = Date::GetCurrentDate();
+	foodData.AddDateToFood(selectedName, date);
+
+	UpdateFoodUI(selectedName);
+}
+
+void MainFrame::OnButtonNomWhen( wxCommandEvent &evt )
+{
+	wxString selectedDate;
+	if( Date::ChooseDate(selectedDate) )
+	{
+		wxString selectedName;
+		listFood->GetSelected(selectedName);
+		foodData.AddDateToFood(selectedName, selectedDate);
+
+		UpdateFoodUI(selectedName);
+	}
 }
 
 void MainFrame::OnClose( wxCloseEvent &evt )
