@@ -6,7 +6,7 @@
 #include<wx/stattext.h>
 #include<wx/button.h>
 
-FoodManipulator::FoodManipulator(wxWindow *parent)
+FoodManipulator::FoodManipulator(wxWindow *parent, bool AddOkPlusButton)
 	: wxDialog(parent, wxID_ANY, "Food Manipulator")
 {
 	CenterOnParent();
@@ -24,17 +24,26 @@ FoodManipulator::FoodManipulator(wxWindow *parent)
 	tcDescription = CreateInputGroup(panel, "Description", currentPosition, 3);
 	tcIngredients = CreateInputGroup(panel, "Ingredients", currentPosition, 3);
 
-	currentPosition.x = clientSize.x - 2*50 - 5 - 5;
+	//move position to bottom right corner
+	currentPosition.x = clientSize.x - 3*55;
 	currentPosition.y = clientSize.y - 25;
 
 	wxSize buttonSize = wxSize(50, 20);
+
+	wxButton *buttonOKPlus = new wxButton(panel, wxID_OK, "Ok+", currentPosition, buttonSize);
+	currentPosition.x += 55;
+
 	wxButton *buttonOK = new wxButton(panel, wxID_ANY, "Ok", currentPosition, buttonSize);
 	currentPosition.x += 55;
 
 	wxButton *buttonCancel = new wxButton(panel, wxID_ANY, "Cancel", currentPosition, buttonSize);
 
+	Connect(buttonOKPlus->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(FoodManipulator::OnButtonOKPlus));
 	Connect(buttonOK->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(FoodManipulator::OnButtonOK));
 	Connect(buttonCancel->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(FoodManipulator::OnButtonCancel));
+
+	if( !AddOkPlusButton )
+		buttonOKPlus->Show(false);
 }
 
 FoodManipulator::~FoodManipulator()
@@ -78,10 +87,15 @@ void FoodManipulator::ClearFields()
 
 void FoodManipulator::OnButtonOK(wxCommandEvent &evt)
 {
-	EndModal(wxID_OK);
+	EndModal(FoodManipulator::ID_OK);
+}
+
+void FoodManipulator::OnButtonOKPlus(wxCommandEvent &evt)
+{
+	EndModal(FoodManipulator::ID_OK_AND_MORE);
 }
 
 void FoodManipulator::OnButtonCancel(wxCommandEvent &evt)
 {
-	EndModal(wxID_CANCEL);
+	EndModal(FoodManipulator::ID_CANCEL);
 }

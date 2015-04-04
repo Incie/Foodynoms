@@ -70,7 +70,7 @@ MainFrame::MainFrame()
 	statistics->Disable();
 
 	listDates = new ListController(boxStats, wxPoint(160, 15), wxSize(150, 185) );
-	listDates->SetColumnName("Dates");
+	listDates->SetColumnName("Dates Eaten");
 
 	Connect(wxEVT_CLOSE_WINDOW, wxCloseEventHandler(MainFrame::OnClose));
 
@@ -153,10 +153,18 @@ void MainFrame::OnListSelection( wxListEvent &evt )
 
 void MainFrame::OnButtonNew( wxCommandEvent &evt )
 {
-	FoodManipulator foodManipulator(this);
+	FoodManipulator foodManipulator(this, true);
+	int retCode = -1;
 
-	if( foodManipulator.ShowModal() == FoodManipulator::ID_OK )
-	{
+	//FoodManipulator can return Ok, Ok+ and Cancel
+	//Ok+ means re-run the dialog.
+	do {
+		foodManipulator.SetFood(emptyFood); //clear the dialog before opening the dialog. [Also clears the dlg for ok+]
+		retCode = foodManipulator.ShowModal();
+
+		if( retCode == FoodManipulator::ID_CANCEL )
+			break;
+
 		Food newFood;
 
 		//DataSide
@@ -165,7 +173,7 @@ void MainFrame::OnButtonNew( wxCommandEvent &evt )
 
 		//UI Side
 		listFood->AddEntry(newFood.name);
-	}
+	} while(retCode == FoodManipulator::ID_OK_AND_MORE);
 }
 
 void MainFrame::OnButtonModify( wxCommandEvent &evt )
@@ -186,7 +194,7 @@ void MainFrame::OnButtonModify( wxCommandEvent &evt )
 	FoodManipulator foodManipulator(this);
 	foodManipulator.SetFood(foodCurrent);
 
-	if( foodManipulator.ShowModal() == wxID_OK )
+	if( foodManipulator.ShowModal() == FoodManipulator::ID_OK )
 	{
 		Food foodNew;
 		foodManipulator.GetFood(foodNew);
