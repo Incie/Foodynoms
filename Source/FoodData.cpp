@@ -41,6 +41,33 @@ std::vector<wxString> FoodData::GetFoodNameList()
 	return foodNames;
 }
 
+#include<algorithm>
+
+int SortFoodNames( const Food* left, const Food* right )
+{
+	return left->name.Cmp( right->name );
+}
+
+std::vector<wxString> FoodData::GetSortedFoodNameList()
+{
+	//Make Copy
+	std::vector<const Food*> foodCopy;
+	for( const auto food : data )
+		foodCopy.push_back(food);
+
+	//Sort Pointers by Criteria
+	//std::sort(foodCopy.begin(), foodCopy.end(), SortFoodNames);	
+
+
+	//return namelist
+	std::vector<wxString> sortedFood;
+	for( auto food : foodCopy )
+		sortedFood.push_back(food->name);
+
+	return sortedFood;
+}
+
+
 bool FoodData::LoadDataFromFile(const wxString &file)
 {
 	ClearData();

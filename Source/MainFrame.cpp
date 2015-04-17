@@ -19,8 +19,10 @@ MainFrame::MainFrame()
 	wxInitAllImageHandlers();
 	Center();
 
-	wxSize clientSize(640,480);
+	wxSize clientSize(640,500);
 	SetClientSize(clientSize);
+	SetMaxClientSize(clientSize);
+	SetMinClientSize(clientSize);
 
 	mainPanel = new wxPanel(this, wxID_ANY, wxPoint(0,0), clientSize);
 
@@ -78,7 +80,8 @@ MainFrame::MainFrame()
 
 
 	foodData.LoadDataFromFile("FoodData.xml");
-	auto nameList = foodData.GetFoodNameList();
+	//auto nameList = foodData.GetFoodNameList();
+	auto nameList = foodData.GetSortedFoodNameList();
 	for( auto name : nameList )
 		listFood->AddEntry(name);
 }
@@ -153,7 +156,7 @@ void MainFrame::OnListSelection( wxListEvent &evt )
 
 void MainFrame::OnButtonNew( wxCommandEvent &evt )
 {
-	FoodManipulator foodManipulator(this, true);
+	FoodManipulator foodManipulator(this, FoodManipulator::ID_OKPLUS_BUTTON);
 	int retCode = -1;
 
 	//FoodManipulator can return Ok, Ok+ and Cancel

@@ -6,7 +6,7 @@
 #include<wx/stattext.h>
 #include<wx/button.h>
 
-FoodManipulator::FoodManipulator(wxWindow *parent, bool AddOkPlusButton)
+FoodManipulator::FoodManipulator(wxWindow *parent, int style)
 	: wxDialog(parent, wxID_ANY, "Food Manipulator")
 {
 	CenterOnParent();
@@ -42,7 +42,7 @@ FoodManipulator::FoodManipulator(wxWindow *parent, bool AddOkPlusButton)
 	Connect(buttonOK->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(FoodManipulator::OnButtonOK));
 	Connect(buttonCancel->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(FoodManipulator::OnButtonCancel));
 
-	if( !AddOkPlusButton )
+	if( style != ID_OKPLUS_BUTTON )
 		buttonOKPlus->Show(false);
 }
 

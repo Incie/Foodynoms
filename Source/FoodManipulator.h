@@ -9,7 +9,7 @@ class wxTextCtrl;
 class FoodManipulator : public wxDialog
 {
 public:
-	FoodManipulator(wxWindow* parent, bool AddOkPlusButton = false);
+	FoodManipulator(wxWindow* parent, int style = 0);
 	~FoodManipulator();
 
 	void SetFood( const Food &food );
@@ -19,7 +19,10 @@ public:
 	enum {
 		ID_OK,
 		ID_OK_AND_MORE,
-		ID_CANCEL
+		ID_CANCEL,
+
+		ID_OKPLUS_BUTTON,
+		ID_NO_OKPLUS
 	};
 
 private:

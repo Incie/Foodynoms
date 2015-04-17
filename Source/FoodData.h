@@ -23,7 +23,11 @@ public:
 
 	bool AddDateToFood( const wxString &name, const wxString &date );
 	const Food* GetFoodByName( const wxString &name );
+
 	std::vector<wxString> GetFoodNameList();
+	std::vector<wxString> GetSortedFoodNameList();
+
+
 
 private:
 	Food* GetFood( const wxString &name );

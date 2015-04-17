@@ -73,8 +73,10 @@ int XMLFoodHandler::SaveDocument( const wxString &file, const std::vector<Food*>
 	wxXmlNode *root = new wxXmlNode(wxXML_ELEMENT_NODE, "food" );
 	document.SetRoot( root );
 
-	for( auto food : foodData )
+	for( int i = foodData.size()-1; i >= 0; --i )
 	{
+		const Food* food = foodData[i];
+
 		wxXmlNode *foodNode = new wxXmlNode(root, wxXML_ELEMENT_NODE, "name");
 		foodNode->AddAttribute("ID", food->name );
 

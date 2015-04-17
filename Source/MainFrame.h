@@ -25,6 +25,7 @@ private:
 	void OnButtonNom( wxCommandEvent &evt );
 	void OnButtonNomWhen( wxCommandEvent &evt );
 	void OnClose( wxCloseEvent &evt );
+	//void OnFilter( wxSomeEvent &evt );
 
 	void OnListSelection( wxListEvent &evt );
 
