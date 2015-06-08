@@ -30,7 +30,8 @@ public:
 			if( token.Cmp(date) == 0 )
 				continue;
 
-			newDatesEaten += wxT(";");
+			if( newDatesEaten.length() != 0 )
+				newDatesEaten += wxT(";");
 			newDatesEaten += date;
 		}
 
