@@ -74,6 +74,9 @@ MainFrame::MainFrame()
 	listDates = new ListController(boxStats, wxPoint(160, 15), wxSize(150, 185) );
 	listDates->SetColumnName("Dates Eaten");
 
+	wxButton *btnRemoveDate = new wxButton(boxStats, wxID_ANY, wxT("x"), wxPoint(160+150+5, 15), wxSize(20,20));
+	Connect(btnRemoveDate->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::OnButtonRemoveNom));
+
 	Connect(wxEVT_CLOSE_WINDOW, wxCloseEventHandler(MainFrame::OnClose));
 
 	Show();
@@ -88,6 +91,27 @@ MainFrame::MainFrame()
 
 MainFrame::~MainFrame()
 {
+}
+
+void MainFrame::OnButtonRemoveNom( wxCommandEvent &evt )
+{
+	wxString selectedDate;
+	if( listDates->GetSelected(selectedDate) != ListController::EC_SUCCESS )
+		return;
+
+	wxString selectedName;
+	if( listFood->GetSelected(selectedName) != ListController::EC_SUCCESS )
+		return;
+
+	const Food* selectedFood = foodData.GetFoodByName(selectedName);
+	if( selectedFood )
+	{
+		Food updatedFood(*selectedFood);
+		updatedFood.RemoveDateEaten(selectedDate);
+		foodData.UpdateFood(*selectedFood, updatedFood);
+
+		UpdateFoodUI(updatedFood);
+	}
 }
 
 void MainFrame::UpdateFoodUI( const wxString &foodName )

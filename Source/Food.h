@@ -1,6 +1,7 @@
 #pragma once
 
 #include<wx/string.h>
+#include<wx/tokenzr.h>
 
 class Food
 {
@@ -14,6 +15,27 @@ public:
 		if( name.Cmp(food.name) != 0 ) name = food.name;
 		if( description.Cmp(food.description) != 0 ) description = food.description;
 		if( ingredients.Cmp(food.ingredients) != 0 ) ingredients = food.ingredients;
+		if( datesEaten.Cmp(food.datesEaten) != 0 ) datesEaten = food.datesEaten;
+	}
+
+	void RemoveDateEaten( const wxString &date )
+	{
+		wxString newDatesEaten;
+
+		wxStringTokenizer dateTokens(datesEaten, wxT(";"));
+		while( dateTokens.HasMoreTokens() )
+		{
+			const wxString token = dateTokens.GetNextToken();
+
+			if( token.Cmp(date) == 0 )
+				continue;
+
+			newDatesEaten += wxT(";");
+			newDatesEaten += date;
+		}
+
+		if( newDatesEaten.Cmp(datesEaten) != 0 )
+			datesEaten = newDatesEaten;
 	}
 
 	//Todo
