@@ -18,6 +18,28 @@ FoodData::~FoodData()
 	ClearData();
 }
 
+wxString FoodData::GenerateDateStatistics()
+{
+	wxString statistics;
+	for( const Food* food : data )
+	{
+		wxStringTokenizer tokens(food->datesEaten, ";");
+
+		while( tokens.HasMoreTokens() )
+		{
+			wxString date = tokens.GetNextToken();
+
+
+			statistics += date;
+			statistics += " - ";
+			statistics += food->name;
+			statistics += "\n";
+		}
+	}
+
+	return statistics;
+}
+
 bool FoodData::AddDateToFood( const wxString &name, const wxString &date )
 {
 	Food* food = GetFood(name);

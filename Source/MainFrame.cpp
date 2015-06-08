@@ -14,7 +14,7 @@
 #include<wx/msgdlg.h>
 
 MainFrame::MainFrame()
-	: wxFrame(nullptr, wxID_ANY, wxT("Foodynoms 0.1.1"))
+	: wxFrame(nullptr, wxID_ANY, wxT("Foodynoms 0.1.2"))
 {
 	wxInitAllImageHandlers();
 	Center();
@@ -34,23 +34,26 @@ MainFrame::MainFrame()
 	buttonDel->SetBitmap(wxBitmap("Images/Remove.png", wxBITMAP_TYPE_PNG));
 	wxButton* buttonNom = new wxButton(mainPanel, wxID_ANY, wxEmptyString, wxPoint(89,5), wxSize(24,24));
 	buttonNom->SetBitmap(wxBitmap("Images/Nom.png", wxBITMAP_TYPE_PNG));
-	wxButton* buttonNomWhen = new wxButton(mainPanel, wxID_ANY, wxEmptyString, wxPoint(89+27,5), wxSize(24,24));
+	wxButton* buttonNomWhen = new wxButton(mainPanel, wxID_ANY, wxEmptyString, wxPoint(116,5), wxSize(24,24));
 	buttonNomWhen->SetBitmap(wxBitmap("Images/NomWhen.png", wxBITMAP_TYPE_PNG));
+	wxButton* buttonStats = new wxButton(mainPanel, wxID_ANY, wxEmptyString, wxPoint(143,5), wxSize(24,24));
+	buttonStats->SetBitmap(wxBitmap("Images/Stats.png", wxBITMAP_TYPE_PNG));
 
 	Connect(buttonNew->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::OnButtonNew));
 	Connect(buttonMod->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::OnButtonModify));
 	Connect(buttonDel->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::OnButtonRemove));
 	Connect(buttonNom->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::OnButtonNom));
+	Connect(buttonStats->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::OnButtonStats));
 	Connect(buttonNomWhen->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::OnButtonNomWhen));
 
-	wxTextCtrl *search = new wxTextCtrl(mainPanel, wxID_ANY, "Filter...", wxPoint(5,32), wxSize(150, 20));
+	wxTextCtrl *search = new wxTextCtrl(mainPanel, wxID_ANY, "Filter...", wxPoint(5,32), wxSize(167, 20));
 
-	listFood = new ListController(mainPanel, wxPoint(5,55), wxSize(150,480-55));
+	listFood = new ListController(mainPanel, wxPoint(5,55), wxSize(167,480-55));
 	listFood->SetColumnName("Fud");
 
 	Connect(listFood->GetListID(), wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(MainFrame::OnListSelection));
 	
-	statFoodHeader = new wxStaticText(mainPanel, wxID_ANY, "<No Selection>", wxPoint(160, 5));
+	statFoodHeader = new wxStaticText(mainPanel, wxID_ANY, "<No Selection>", wxPoint(173, 5));
 	wxFont font = statFoodHeader->GetFont();
 	font.SetPointSize(12);
 	statFoodHeader->SetFont(font);
@@ -59,15 +62,16 @@ MainFrame::MainFrame()
 	int textCtrlStyle = wxTE_BESTWRAP|wxTE_MULTILINE|wxTE_NO_VSCROLL;
 	wxPoint textCtrlPosition(5,15);
 
-	wxStaticBox *boxDescription = new wxStaticBox(mainPanel, wxID_ANY, wxString("Description"), wxPoint(160, 25), wxSize(480, 100));
+	int boxStartX = 175;
+	wxStaticBox *boxDescription = new wxStaticBox(mainPanel, wxID_ANY, wxString("Description"), wxPoint(boxStartX, 25), wxSize(480, 100));
 	description = new wxTextCtrl(boxDescription, wxID_ANY, wxEmptyString, textCtrlPosition, wxSize(470,80), textCtrlStyle);
 	description->Disable();
 
-	wxStaticBox *boxRecipe = new wxStaticBox(mainPanel, wxID_ANY, wxString("Ingredients"), wxPoint(160, 130), wxSize(480, 150));
+	wxStaticBox *boxRecipe = new wxStaticBox(mainPanel, wxID_ANY, wxString("Ingredients"), wxPoint(boxStartX, 130), wxSize(480, 150));
 	ingredients = new wxTextCtrl(boxRecipe, wxID_ANY, wxEmptyString, textCtrlPosition, wxSize(470,130), textCtrlStyle);
 	ingredients->Disable();
 
-	wxStaticBox *boxStats = new wxStaticBox(mainPanel, wxID_ANY, wxString("Statistics"), wxPoint(160, 290), wxSize(480, 205));
+	wxStaticBox *boxStats = new wxStaticBox(mainPanel, wxID_ANY, wxString("Statistics"), wxPoint(boxStartX, 290), wxSize(480, 205));
 	statistics = new wxTextCtrl(boxStats, wxID_ANY, wxEmptyString, textCtrlPosition, wxSize(150,185), textCtrlStyle);
 	statistics->Disable();
 
@@ -91,6 +95,12 @@ MainFrame::MainFrame()
 
 MainFrame::~MainFrame()
 {
+}
+
+void MainFrame::OnButtonStats( wxCommandEvent &evt )
+{
+	wxString &stats = foodData.GenerateDateStatistics();
+	wxMessageBox(stats, "stats");
 }
 
 void MainFrame::OnButtonRemoveNom( wxCommandEvent &evt )

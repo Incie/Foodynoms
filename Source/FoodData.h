@@ -27,7 +27,7 @@ public:
 	std::vector<wxString> GetFoodNameList();
 	std::vector<wxString> GetSortedFoodNameList();
 
-
+	wxString GenerateDateStatistics();
 
 private:
 	Food* GetFood( const wxString &name );
