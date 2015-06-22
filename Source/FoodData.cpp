@@ -18,23 +18,43 @@ FoodData::~FoodData()
 	ClearData();
 }
 
+struct Statistic 
+{
+	wxString food;
+	wxString date;
+};
+
+bool SortStatistics( const Statistic &s0, const Statistic &s1 )
+{
+	return s0.date.Cmp( s1.date ) < 0;
+}
+
 wxString FoodData::GenerateDateStatistics()
 {
-	wxString statistics;
+	std::vector<Statistic> statisticList;
+
 	for( const Food* food : data )
 	{
 		wxStringTokenizer tokens(food->datesEaten, ";");
-
 		while( tokens.HasMoreTokens() )
 		{
-			wxString date = tokens.GetNextToken();
+			statisticList.push_back( Statistic() );
+			Statistic &s = statisticList.back();
 
-
-			statistics += date;
-			statistics += " - ";
-			statistics += food->name;
-			statistics += "\n";
+			s.date = tokens.GetNextToken();
+			s.food = food->name;
 		}
+	}
+
+	std::sort(statisticList.begin(), statisticList.end(), SortStatistics);
+
+	wxString statistics;
+	for( auto &s : statisticList )
+	{
+		statistics += s.date;
+		statistics += " - ";
+		statistics += s.food;
+		statistics += "\n";
 	}
 
 	return statistics;
@@ -46,6 +66,13 @@ bool FoodData::AddDateToFood( const wxString &name, const wxString &date )
 
 	if( !food )
 		return false;
+
+	//Make sure it ends with a ;
+	if( !food->datesEaten.IsEmpty() )
+	{
+		if( food->datesEaten.EndsWith(wxT(";")) == false )
+			food->datesEaten += ";";
+	}
 
 	food->datesEaten += (date + ";");
 	return true;
