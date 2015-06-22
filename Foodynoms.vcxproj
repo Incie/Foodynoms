@@ -28,7 +28,16 @@
     <ClInclude Include="Source\FoodManipulator.h" />
     <ClInclude Include="Source\ListController.h" />
     <ClInclude Include="Source\MainFrame.h" />
+    <ClInclude Include="Source\resource\resource1.h" />
     <ClInclude Include="Source\XMLFoodHandler.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Source\resource\icon.ico" />
+    <Image Include="Source\resource\icon.png" />
+    <Image Include="Source\resource\icon1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Source\resource\Foodynoms.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8750102E-556F-4BFE-9491-6B3496E6CCFF}</ProjectGuid>

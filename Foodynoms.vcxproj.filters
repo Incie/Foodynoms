@@ -17,6 +17,9 @@
     <Filter Include="Source Files\Utils\IO">
       <UniqueIdentifier>{6acf9362-1558-4249-a892-605685c0eda7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{62807034-f4ab-40d8-80b5-3d5871e1706f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\XMLFoodHandler.cpp">
@@ -69,5 +72,22 @@
     <ClInclude Include="Source\DatePickerDialog.h">
       <Filter>Source Files\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Source\resource\resource1.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Source\resource\icon1.ico">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Source\resource\icon.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="Source\resource\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Source\resource\Foodynoms.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

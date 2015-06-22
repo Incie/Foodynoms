@@ -13,6 +13,9 @@
 #include<wx/textctrl.h>
 #include<wx/msgdlg.h>
 
+#include"resource/resource1.h"
+#include<wx/dcclient.h>
+
 MainFrame::MainFrame()
 	: wxFrame(nullptr, wxID_ANY, wxT("Foodynoms 0.1.2"))
 {
@@ -23,6 +26,16 @@ MainFrame::MainFrame()
 	SetClientSize(clientSize);
 	SetMaxClientSize(clientSize);
 	SetMinClientSize(clientSize);
+
+	//wxBitmap bmp = wxBITMAP( IDB_BITMAP1 );
+	//bool bok = bmp.IsOk();
+
+	//wxIcon icon;
+	//icon.CopyFromBitmap(bmp);
+
+	wxIcon icon = wxICON(IDI_ICON2);
+	bool ok = icon.IsOk();
+	SetIcon( icon );
 
 	mainPanel = new wxPanel(this, wxID_ANY, wxPoint(0,0), clientSize);
 
