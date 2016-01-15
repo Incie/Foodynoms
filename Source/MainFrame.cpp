@@ -112,8 +112,10 @@ MainFrame::~MainFrame()
 
 void MainFrame::OnButtonStats( wxCommandEvent &evt )
 {
-	wxString &stats = foodData.GenerateDateStatistics();
-	wxMessageBox(stats, "stats");
+	//wxString &stats = foodData.GenerateDateStatistics();
+	//wxMessageBox(stats, "stats");
+
+	wxMessageBox(foodData.ExportJSON(), "json");
 }
 
 void MainFrame::OnButtonRemoveNom( wxCommandEvent &evt )

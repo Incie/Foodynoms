@@ -28,6 +28,7 @@ public:
 	std::vector<wxString> GetSortedFoodNameList();
 
 	wxString GenerateDateStatistics();
+	wxString ExportJSON();
 
 private:
 	Food* GetFood( const wxString &name );

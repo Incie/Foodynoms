@@ -29,6 +29,30 @@ bool SortStatistics( const Statistic &s0, const Statistic &s1 )
 	return s0.date.Cmp( s1.date ) < 0;
 }
 
+wxString AddJSONField(const wxString &fieldName, const wxString &fieldValue, wxString end = "")
+{
+	return wxString::Format("\"%s\":\"%s\"%s", fieldName, fieldValue, end);	
+}
+
+wxString FoodData::ExportJSON()
+{
+	wxString json = "{";
+
+	for( const Food* food : data )
+	{
+		json += "{";
+		json += AddJSONField("name", food->name, ",");
+		json += AddJSONField("description", food->description, ",");
+		json += AddJSONField("ingredients", food->ingredients);
+		json += "}";
+	}
+
+	json += "}";
+
+
+	return json;
+}
+
 wxString FoodData::GenerateDateStatistics()
 {
 	std::vector<Statistic> statisticList;
